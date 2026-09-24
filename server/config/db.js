@@ -23,21 +23,4 @@ const pool = mysql.createPool({
   }
 })();
 
-export async function createUser(name, email, password) {
-  const sqlQuery = "INSERT INTO users (name, email) values (?, ?)";
-  const result = await pool.query("SELECT id FROM users WHERE email = ?", [
-    email,
-  ]);
-
-  // console.log(result[0][0].id);
-
-  // if (result[0][0].id) {
-  //   console.log("User with email alreadt exists");
-  // } else {
-  const result2 = await pool.query(sqlQuery, [name, email]);
-  console.log(result2);
-  return result2;
-  // }
-}
-
 export default pool;

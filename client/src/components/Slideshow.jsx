@@ -1,5 +1,6 @@
 import {useState, useEffect, useRef} from "react";
 import {Play, Pause} from "lucide-react";
+import axios from "axios";
 
 export default function Slideshow({backgroundOnly = false}) {
   const [movies, setMovies] = useState([]);
@@ -7,11 +8,11 @@ export default function Slideshow({backgroundOnly = false}) {
   const [isPlaying, setIsPlaying] = useState(true);
   const timerRef = useRef(null);
 
-  const API_KEY = "875a977ab94cd7108c47a3bed943830f";
-
   useEffect(() => {
     (async () => {
       try {
+        const apiDataFetch = await axios.get("http://localhost:5000/api/data");
+        const API_KEY = apiDataFetch.data.API_KEY;
         const response = await fetch(
           `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&page=1`,
         );

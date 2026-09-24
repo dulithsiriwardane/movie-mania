@@ -1,5 +1,6 @@
 import {useState} from "react";
 import Slideshow from "./Slideshow";
+import axios from "axios";
 
 export default function SignUp() {
   const [formData, setFormData] = useState({
@@ -10,15 +11,31 @@ export default function SignUp() {
   });
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleChange = (e) => {
+  function handleChange(e) {
     const {name, value} = e.target;
     setFormData((prev) => ({...prev, [name]: value}));
-  };
+  }
 
-  const handleSubmit = (e) => {
+  async function registerUser() {
+    const newUser = {
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      password: formData.password,
+      email: formData.email,
+    };
+
+    const response = await axios.post(
+      "http://localhost:5000/api/signup",
+      newUser,
+    );
+
+    console.log(response);
+  }
+
+  function handleSubmit(e) {
     e.preventDefault();
-    console.log("Submitted registration:", formData);
-  };
+    registerUser();
+  }
 
   return (
     <div className="relative flex min-h-screen bg-gray-950 justify-center items-center p-4 antialiased font-inter overflow-hidden">

@@ -1,5 +1,2 @@
-# Create a .gitignore file and exclude node_modules and environment variables
-echo ".env" >> .gitignore
-
-# Create a sample main entry file for your app
-echo "console.log('Hello World');" >> index.js
+.env
+node_modules
