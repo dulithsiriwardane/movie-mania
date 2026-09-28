@@ -1,6 +1,7 @@
 import {useState} from "react";
+import {useNavigate} from "react-router-dom";
 import Slideshow from "./Slideshow";
-import axios from "axios";
+import {useAuth} from "../context/AuthContext";
 
 export default function SignIn() {
   const [formData, setFormData] = useState({
@@ -8,29 +9,32 @@ export default function SignIn() {
     password: "",
   });
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
+  const {signIn} = useAuth();
 
   function handleChange(e) {
     const {name, value} = e.target;
     setFormData((prev) => ({...prev, [name]: value}));
+    setError("");
   }
 
-  async function logInUser() {
-    const userData = {
-      email: formData.email,
-      password: formData.password,
-    };
-
-    const response = await axios.post(
-      "http://localhost:5000/api/auth/signin",
-      userData,
-    );
-
-    console.log(response);
-  }
-
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    logInUser();
+    setError("");
+    setIsLoading(true);
+
+    try {
+      await signIn(formData.email, formData.password);
+      navigate("/dashboard");
+    } catch (err) {
+      setError(
+        err.response?.data?.message || "Sign in failed. Please try again.",
+      );
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   return (
@@ -55,6 +59,12 @@ export default function SignIn() {
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-3.5">
+              {error && (
+                <div className="bg-red-500/10 border border-red-500/30 rounded-lg px-3 py-2 text-sm text-red-400">
+                  {error}
+                </div>
+              )}
+
               <div>
                 <label
                   htmlFor="email"
@@ -148,9 +158,10 @@ export default function SignIn() {
 
               <button
                 type="submit"
-                className="w-full bg-red-600 text-white py-2.5 rounded-lg text-sm font-semibold hover:bg-red-700 transition duration-150 shadow-sm"
+                disabled={isLoading}
+                className="w-full bg-red-600 text-white py-2.5 rounded-lg text-sm font-semibold hover:bg-red-700 transition duration-150 shadow-sm disabled:opacity-50"
               >
-                Sign In
+                {isLoading ? "Signing In..." : "Sign In"}
               </button>
             </form>
 

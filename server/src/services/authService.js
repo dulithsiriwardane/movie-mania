@@ -2,6 +2,18 @@ const userModel = require("../models/userModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
+function generateAccessToken(userId) {
+  return jwt.sign({ id: userId }, process.env.JWT_SECRET, {
+    expiresIn: "15m",
+  });
+}
+
+function generateRefreshToken(userId) {
+  return jwt.sign({ id: userId }, process.env.JWT_REFRESH_SECRET, {
+    expiresIn: "7d",
+  });
+}
+
 async function signIn(email, password) {
   const user = await userModel.findUserByEmail(email);
   if (!user.length) {
@@ -16,17 +28,27 @@ async function signIn(email, password) {
     throw new Error("Invalid email or password");
   }
 
-  const token = jwt.sign({id: foundUser.id}, process.env.JWT_SECRET, {
-    expiresIn: "15m",
-  });
+  const accessToken = generateAccessToken(foundUser.id);
+  const refreshToken = generateRefreshToken(foundUser.id);
 
   return {
-    token,
+    accessToken,
+    refreshToken,
     user: {
       id: foundUser.id,
       email: foundUser.email,
     },
   };
+}
+
+async function refreshAccessToken(refreshToken) {
+  try {
+    const decoded = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET);
+    const accessToken = generateAccessToken(decoded.id);
+    return { accessToken };
+  } catch (error) {
+    throw new Error("Invalid refresh token");
+  }
 }
 
 async function signUp(firstName, lastName, email, password) {
@@ -48,4 +70,5 @@ async function signUp(firstName, lastName, email, password) {
 module.exports = {
   signIn,
   signUp,
+  refreshAccessToken,
 };
