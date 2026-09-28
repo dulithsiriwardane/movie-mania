@@ -25,7 +25,7 @@ export default function SignUp() {
     };
 
     const response = await axios.post(
-      "http://localhost:5000/api/signup",
+      "http://localhost:5000/api/auth/signup",
       newUser,
     );
 

@@ -21,7 +21,7 @@ export default function SignIn() {
     };
 
     const response = await axios.post(
-      "http://localhost:5000/api/signin",
+      "http://localhost:5000/api/auth/signin",
       userData,
     );
 
