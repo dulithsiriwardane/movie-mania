@@ -38,7 +38,9 @@ export function AuthProvider({children}) {
           originalRequest._retry = true;
 
           try {
-            const {data} = await axios.post(`${API_BASE}/refresh`);
+            const {data} = await axios.post(
+              `${import.meta.env.VITE_API_URL}/api/auth/refresh`,
+            );
             setAccessToken(data.accessToken);
             localStorage.setItem("accessToken", data.accessToken);
 
@@ -64,10 +66,13 @@ export function AuthProvider({children}) {
   }, []);
 
   async function signIn(email, password) {
-    const {data} = await axios.post(`${API_BASE}/signin`, {
-      email,
-      password,
-    });
+    const {data} = await axios.post(
+      `${import.meta.env.VITE_API_URL}/api/auth/signin`,
+      {
+        email,
+        password,
+      },
+    );
 
     setAccessToken(data.accessToken);
     setUser(data.user);
@@ -78,7 +83,7 @@ export function AuthProvider({children}) {
 
   async function signOut() {
     try {
-      await axios.post(`${API_BASE}/signout`);
+      await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/signout`);
     } catch {
       // ignore
     }
