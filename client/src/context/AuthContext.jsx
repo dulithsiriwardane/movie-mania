@@ -39,7 +39,7 @@ export function AuthProvider({children}) {
 
           try {
             const {data} = await axios.post(
-              `${import.meta.env.API_URL}/api/auth/refresh`,
+              `${process.env.API_URL}/api/auth/refresh`,
             );
             setAccessToken(data.accessToken);
             localStorage.setItem("accessToken", data.accessToken);
@@ -66,13 +66,10 @@ export function AuthProvider({children}) {
   }, []);
 
   async function signIn(email, password) {
-    const {data} = await axios.post(
-      `${import.meta.env.API_URL}/api/auth/signin`,
-      {
-        email,
-        password,
-      },
-    );
+    const {data} = await axios.post(`${process.env.API_URL}/api/auth/signin`, {
+      email,
+      password,
+    });
 
     setAccessToken(data.accessToken);
     setUser(data.user);
@@ -83,7 +80,7 @@ export function AuthProvider({children}) {
 
   async function signOut() {
     try {
-      await axios.post(`${import.meta.env.API_URL}/api/auth/signout`);
+      await axios.post(`${process.env.API_URL}/api/auth/signout`);
     } catch {
       // ignore
     }

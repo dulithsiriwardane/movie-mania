@@ -25,7 +25,7 @@ export default function SignUp() {
     };
 
     const response = await axios.post(
-      `${import.meta.env.API_URL}/api/auth/signup`,
+      `${process.env.API_URL}/api/auth/signup`,
       newUser,
     );
 
