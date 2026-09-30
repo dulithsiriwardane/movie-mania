@@ -12,7 +12,7 @@ export default function Slideshow({backgroundOnly = false}) {
     (async () => {
       try {
         const apiDataFetch = await axios.get(
-          `${import.meta.env.VITE_API_URL}/api/data`,
+          `${import.meta.env.API_URL}/api/data`,
         );
         const API_KEY = apiDataFetch.data.API_KEY;
         const response = await fetch(

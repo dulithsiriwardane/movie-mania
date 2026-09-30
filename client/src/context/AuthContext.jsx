@@ -3,7 +3,7 @@ import axios from "axios";
 
 const AuthContext = createContext(null);
 
-const API_BASE = "http://localhost:5000/api/auth";
+// const API_BASE = "http://localhost:5000/api/auth";
 
 // Configure axios to send cookies with every request
 axios.defaults.withCredentials = true;
@@ -39,7 +39,7 @@ export function AuthProvider({children}) {
 
           try {
             const {data} = await axios.post(
-              `${import.meta.env.VITE_API_URL}/api/auth/refresh`,
+              `${import.meta.env.API_URL}/api/auth/refresh`,
             );
             setAccessToken(data.accessToken);
             localStorage.setItem("accessToken", data.accessToken);
@@ -67,7 +67,7 @@ export function AuthProvider({children}) {
 
   async function signIn(email, password) {
     const {data} = await axios.post(
-      `${import.meta.env.VITE_API_URL}/api/auth/signin`,
+      `${import.meta.env.API_URL}/api/auth/signin`,
       {
         email,
         password,
@@ -83,7 +83,7 @@ export function AuthProvider({children}) {
 
   async function signOut() {
     try {
-      await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/signout`);
+      await axios.post(`${import.meta.env.API_URL}/api/auth/signout`);
     } catch {
       // ignore
     }
