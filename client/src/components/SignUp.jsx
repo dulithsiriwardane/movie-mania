@@ -25,7 +25,7 @@ export default function SignUp() {
     };
 
     const response = await axios.post(
-      `${import.meta.env.VITE_API_URL}/api/auth/signup`,
+      `${import.meta.env.API_URL}/api/auth/signup`,
       newUser,
     );
 
