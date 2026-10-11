@@ -1,41 +1,11 @@
-import {useState, useEffect, useRef} from "react";
+import {useEffect, useRef} from "react";
 import {Play, Pause} from "lucide-react";
-import axios from "axios";
+import {useMovies} from "../context/MovieContext";
 
 export default function Slideshow({backgroundOnly = false}) {
-  const [movies, setMovies] = useState([]);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(true);
+  const {movies, currentIndex, setCurrentIndex, isPlaying, togglePlayPause} =
+    useMovies();
   const timerRef = useRef(null);
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const apiDataFetch = await axios.get(
-          `${process.env.API_URL}/api/data`,
-        );
-        const API_KEY = apiDataFetch.data.API_KEY;
-        const response = await fetch(
-          `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&page=1`,
-        );
-        const data = await response.json();
-        if (data.results && data.results.length > 0) {
-          const formatted = data.results
-            .filter((m) => m.backdrop_path)
-            .map((m) => ({
-              id: m.id,
-              title: m.title,
-              overview: m.overview,
-              backdrop_path: `https://image.tmdb.org/t/p/original${m.backdrop_path}`,
-            }));
-          setMovies(formatted);
-          setCurrentIndex(0);
-        }
-      } catch (err) {
-        console.error("Failed to fetch TMDB movies:", err);
-      }
-    })();
-  }, []);
 
   useEffect(() => {
     if (isPlaying && movies.length > 0) {
@@ -48,11 +18,7 @@ export default function Slideshow({backgroundOnly = false}) {
         clearInterval(timerRef.current);
       }
     };
-  }, [isPlaying, movies.length]);
-
-  const togglePlayPause = () => {
-    setIsPlaying((prev) => !prev);
-  };
+  }, [isPlaying, movies.length, setCurrentIndex]);
 
   return (
     <div
@@ -70,7 +36,7 @@ export default function Slideshow({backgroundOnly = false}) {
               ? "opacity-100 scale-105 transition-transform duration-[6000ms]"
               : "opacity-0 scale-100"
           }`}
-          style={{backgroundImage: `url(${movie.backdrop_path})`}}
+          style={{backgroundImage: `url(${movie.backdropPath})`}}
         />
       ))}
 
