@@ -2,6 +2,7 @@ import {BrowserRouter, Routes, Route, Navigate} from "react-router-dom";
 import SignIn from "./components/SignIn";
 import SignUp from "./components/SignUp";
 import {AuthProvider, useAuth} from "./context/AuthContext";
+import {HeroSection} from "./components/hero/HeroSection";
 
 function ProtectedRoute({children}) {
   const {isAuthenticated, loading} = useAuth();
@@ -23,7 +24,7 @@ export default function App() {
             path="/dashboard"
             element={
               <ProtectedRoute>
-                <div>Dashboard (replace with your component)</div>
+                <HeroSection></HeroSection>
               </ProtectedRoute>
             }
           />

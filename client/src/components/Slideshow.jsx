@@ -11,9 +11,7 @@ export default function Slideshow({backgroundOnly = false}) {
   useEffect(() => {
     (async () => {
       try {
-        const apiDataFetch = await axios.get(
-          `${process.env.API_URL}/api/data`,
-        );
+        const apiDataFetch = await axios.get(`${process.env.API_URL}/api/data`);
         const API_KEY = apiDataFetch.data.API_KEY;
         const response = await fetch(
           `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&page=1`,
