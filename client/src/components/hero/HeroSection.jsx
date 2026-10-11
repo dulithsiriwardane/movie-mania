@@ -1,12 +1,18 @@
 import {useState} from "react";
 import Slideshow from "../Slideshow";
+import {useMovies} from "../../context/MovieContext";
 import {HeroContent} from "./HeroContent";
 import {MovieDetailModal} from "./MovieDetailModal";
-import {usePopularMovies} from "../../hooks/usePopularMovies";
 
 export function HeroSection() {
-  const {movies, loading} = usePopularMovies();
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const {
+    movies,
+    currentMovie,
+    loading,
+    setCurrentIndex,
+    isPlaying,
+    togglePlayPause,
+  } = useMovies();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleNext = () => {
@@ -21,8 +27,6 @@ export function HeroSection() {
     }
   };
 
-  const currentMovie = movies[currentIndex] || null;
-
   if (loading) {
     return (
       <div className="relative w-full h-[600px] bg-slate-950 flex items-center justify-center">
@@ -33,22 +37,27 @@ export function HeroSection() {
 
   return (
     <section className="relative w-full h-[600px] sm:h-[700px] overflow-hidden bg-slate-950 shadow-2xl">
-      {/* Your Existing Slideshow Component rendered as the background */}
       <Slideshow backgroundOnly={true} />
 
-      {/* Foreground Content with Title, Release Year, Description, and Navigation */}
       <HeroContent
         movie={currentMovie}
         onNext={handleNext}
         onPrev={handlePrev}
-        onViewDetails={() => setIsModalOpen(true)}
+        isPlaying={isPlaying}
+        togglePlayPause={togglePlayPause}
+        onViewDetails={() => {
+          setIsModalOpen(true);
+          togglePlayPause();
+        }}
       />
 
-      {/* Modal Popup */}
       {isModalOpen && currentMovie && (
         <MovieDetailModal
           movie={currentMovie}
-          onClose={() => setIsModalOpen(false)}
+          onClose={() => {
+            setIsModalOpen(false);
+            togglePlayPause();
+          }}
         />
       )}
     </section>
