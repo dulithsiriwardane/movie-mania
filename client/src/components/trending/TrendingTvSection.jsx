@@ -2,7 +2,6 @@ import {useState, useEffect, useRef} from "react";
 import {ChevronLeft, ChevronRight, Pause, Play, TrendingUp} from "lucide-react";
 import TrendingTvItem from "./TrendingTvItem";
 
-
 const TV_GENRE_MAP = {
   10759: "Action & Adventure",
   16: "Animation",
@@ -40,14 +39,13 @@ export function TrendingTvSection({onSelectMovie}) {
   const [isPlaying, setIsPlaying] = useState(true);
   const scrollContainerRef = useRef(null);
 
-  
   useEffect(function () {
     async function fetchTrendingTVShows() {
       try {
         setIsLoading(true);
         setError(null);
 
-        const apiKey = "875a977ab94cd7108c47a3bed943830f"; 
+        const apiKey = "875a977ab94cd7108c47a3bed943830f";
         const response = await fetch(
           `https://api.themoviedb.org/3/trending/tv/day?api_key=${apiKey}`,
         );
@@ -61,12 +59,12 @@ export function TrendingTvSection({onSelectMovie}) {
         const formattedShows = (data.results || []).map(function (item) {
           return {
             id: item.id,
-            title: item.name, 
+            title: item.name,
             banner: item.poster_path
               ? `https://image.tmdb.org/t/p/w500${item.poster_path}`
               : "https://via.placeholder.com/500x750?text=No+Image",
             rating: item.vote_average ? item.vote_average.toFixed(1) : null,
-            year: (item.first_air_date || "").substring(0, 4), 
+            year: (item.first_air_date || "").substring(0, 4),
             genres: getGenreNames(item.genre_ids),
           };
         });
@@ -82,7 +80,6 @@ export function TrendingTvSection({onSelectMovie}) {
     fetchTrendingTVShows();
   }, []);
 
-  
   useEffect(
     function () {
       if (!isPlaying || movies.length === 0) return;
@@ -92,7 +89,6 @@ export function TrendingTvSection({onSelectMovie}) {
           const container = scrollContainerRef.current;
           const scrollAmount = 300;
 
-          
           if (
             container.scrollLeft + container.clientWidth >=
             container.scrollWidth - 10
@@ -126,14 +122,13 @@ export function TrendingTvSection({onSelectMovie}) {
   }
 
   return (
-    <section className="w-full max-w-7xl mx-auto px-4 py-6">
+    <section className="w-full max-w-7xl mx-auto">
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-xl md:text-2xl font-bold text-gray-100 tracking-tight flex items-center justify-center gap-x-3">
           <span>Trending TV Shows</span>
-          <TrendingUp className="w-8 h-8" />
+          <TrendingUp className="w-8 h-8 text-red-600" />
         </h2>
 
-        
         <div className="flex items-center gap-2">
           <button
             onClick={function () {
@@ -169,7 +164,6 @@ export function TrendingTvSection({onSelectMovie}) {
         </div>
       </div>
 
-      
       {isLoading ? (
         <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-red-600 m-auto"></div>
       ) : error ? (

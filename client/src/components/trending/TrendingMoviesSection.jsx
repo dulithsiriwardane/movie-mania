@@ -125,11 +125,11 @@ export function TrendingMoviesSection({onSelectMovie}) {
   }
 
   return (
-    <section className="w-full max-w-7xl mx-auto px-4 py-6">
+    <section className="w-full max-w-7xl mx-auto">
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-xl md:text-2xl font-bold text-gray-100 tracking-tight flex items-center justify-center gap-x-3">
           <span>Trending Movies</span>
-          <TrendingUp className="w-8 h-8" />
+          <TrendingUp className="w-8 h-8 text-red-600" />
         </h2>
 
         <div className="flex items-center gap-2">
