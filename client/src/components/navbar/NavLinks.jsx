@@ -13,12 +13,12 @@ function NavLinks({currentPath, onNavigate}) {
 
   return (
     <nav className="hidden md:flex items-center space-x-1 lg:space-x-2">
-      {links.map(function (link) {
+      {links.map((link) => {
         const isActive = currentPath === link.path;
         return (
           <button
             key={link.path}
-            onClick={function () {
+            onClick={() => {
               handleLinkClick(link.path);
             }}
             className={`px-3.5 py-1.5 rounded-lg text-sm font-medium transition-colors duration-150 ${
@@ -27,7 +27,7 @@ function NavLinks({currentPath, onNavigate}) {
                 : "text-neutral-300 hover:text-white"
             }`}
           >
-            {link.name}
+            <a href={link.path}>{link.name}</a>
           </button>
         );
       })}
