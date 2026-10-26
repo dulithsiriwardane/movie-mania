@@ -10,7 +10,7 @@ export default function Home() {
     <>
       <Navbar />
       <HeroSection />
-      <div className="py-8 mx-auto">
+      <div className="flex flex-col gap-y-8 mx-auto px-4 my-10">
         <TrendingMoviesSection />
         <TrendingTvSection />
       </div>

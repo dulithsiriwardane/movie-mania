@@ -200,7 +200,7 @@ export function ExploreLatestSection({onSelectItem}) {
   }
 
   return (
-    <section className="w-full max-w-7xl mx-auto px-4 py-6">
+    <section className="w-full max-w-7xl mx-auto mb-10 px-4">
       {/* Section Header & Filters */}
       <div className="flex md:items-center justify-between gap-4 mb-4">
         <h2 className="text-xl md:text-2xl font-bold text-gray-100 tracking-tight flex items-center gap-x-3">
