@@ -1,9 +1,9 @@
 import {BrowserRouter, Routes, Route, Navigate} from "react-router-dom";
-import SignIn from "./components/SignIn";
-import SignUp from "./components/SignUp";
+import SignIn from "./components/auth/SignIn";
+import SignUp from "./components/auth/SignUp";
 import {AuthProvider, useAuth} from "./context/AuthContext";
-import {HeroSection} from "./components/hero/HeroSection";
 import {MovieProvider} from "./context/MovieContext";
+import Home from "./pages/Home";
 
 function ProtectedRoute({children}) {
   const {isAuthenticated, loading} = useAuth();
@@ -22,15 +22,8 @@ export default function App() {
           <Routes>
             <Route path="/signin" element={<SignIn />} />
             <Route path="/signup" element={<SignUp />} />
-            <Route
-              path="/dashboard"
-              element={
-                <ProtectedRoute>
-                  <HeroSection></HeroSection>
-                </ProtectedRoute>
-              }
-            />
-            <Route path="*" element={<Navigate to="/signin" replace />} />
+            <Route path="/" element={<Home />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </MovieProvider>
       </AuthProvider>

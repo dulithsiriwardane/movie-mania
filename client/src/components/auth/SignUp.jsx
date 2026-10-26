@@ -1,5 +1,5 @@
 import {useState} from "react";
-import Slideshow from "./Slideshow";
+import Slideshow from "../Slideshow";
 import axios from "axios";
 
 export default function SignUp() {

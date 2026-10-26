@@ -3,6 +3,7 @@ import Slideshow from "../Slideshow";
 import {useMovies} from "../../context/MovieContext";
 import {HeroContent} from "./HeroContent";
 import {MovieDetailModal} from "./MovieDetailModal";
+import axios from "axios";
 
 export function HeroSection() {
   const {
@@ -26,6 +27,11 @@ export function HeroSection() {
       setCurrentIndex((prev) => (prev - 1 + movies.length) % movies.length);
     }
   };
+
+  async function handleAddToWatchlist() {
+    const id = currentMovie.id;
+    const response = await axios.post();
+  }
 
   if (loading) {
     return (

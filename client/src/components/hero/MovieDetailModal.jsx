@@ -29,12 +29,17 @@ export function MovieDetailModal({movie, onClose}) {
                   <Calendar className="w-4 h-4 text-red-500" />
                   <span>{movie.releaseYear}</span>
                 </span>
-                {movie.voteAverage && (
-                  <span className="flex items-center space-x-1">
-                    <Star className="w-4 h-4 text-amber-400 fill-amber-400" />
-                    <span>{movie.voteAverage.toFixed(1)} / 10</span>
+
+                <span className="flex items-center space-x-1">
+                  <Star className="w-4 h-4 text-amber-400 fill-amber-400" />
+                  <span>
+                    {" "}
+                    {!movie.voteAverage
+                      ? "N/A"
+                      : `${movie.voteAverage.toFixed(1)}`}
+                    {"/10"}
                   </span>
-                )}
+                </span>
               </div>
               <p className="text-slate-300 text-sm leading-relaxed">
                 {movie.overview}
