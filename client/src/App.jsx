@@ -4,6 +4,7 @@ import SignUp from "./components/auth/SignUp";
 import {AuthProvider, useAuth} from "./context/AuthContext";
 import {MovieProvider} from "./context/MovieContext";
 import Home from "./pages/Home";
+import {SearchResultsList} from "./components/navbar/SearchResultsList";
 
 function ProtectedRoute({children}) {
   const {isAuthenticated, loading} = useAuth();
@@ -23,6 +24,7 @@ export default function App() {
             <Route path="/signin" element={<SignIn />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/" element={<Home />} />
+            <Route path="/sr" element={<SearchResultsList />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </MovieProvider>
