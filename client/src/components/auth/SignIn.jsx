@@ -1,7 +1,7 @@
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
-import Slideshow from "./Slideshow";
-import {useAuth} from "../context/AuthContext";
+import Slideshow from "../Slideshow";
+import {useAuth} from "../../context/AuthContext";
 
 export default function SignIn() {
   const [formData, setFormData] = useState({

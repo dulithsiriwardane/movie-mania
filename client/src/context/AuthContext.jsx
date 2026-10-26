@@ -15,7 +15,6 @@ export function AuthProvider({children}) {
   );
   const [loading, setLoading] = useState(true);
 
-  // Set up axios interceptor to attach token to every request
   useEffect(() => {
     const requestInterceptor = axios.interceptors.request.use((config) => {
       if (accessToken) {
@@ -27,7 +26,6 @@ export function AuthProvider({children}) {
     return () => axios.interceptors.request.eject(requestInterceptor);
   }, [accessToken]);
 
-  // Set up response interceptor for automatic token refresh on 403
   useEffect(() => {
     const responseInterceptor = axios.interceptors.response.use(
       (response) => response,
@@ -47,7 +45,7 @@ export function AuthProvider({children}) {
             originalRequest.headers.Authorization = `Bearer ${data.accessToken}`;
             return axios(originalRequest);
           } catch (refreshError) {
-            // Refresh failed — force sign out
+
             signOut();
             return Promise.reject(refreshError);
           }
@@ -60,7 +58,6 @@ export function AuthProvider({children}) {
     return () => axios.interceptors.response.eject(responseInterceptor);
   }, []);
 
-  // Resolve loading state on mount
   useEffect(() => {
     setLoading(false);
   }, []);
