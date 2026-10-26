@@ -19,12 +19,12 @@ function MobileMenu({
 
   return (
     <div className="absolute top-full left-0 right-0 mt-3 bg-gray-900/95 backdrop-blur-xl border border-neutral-800/80 shadow-2xl shadow-black/50 rounded-lg p-5 flex flex-col space-y-4 md:hidden z-50">
-      {/* Mobile Search Bar */}
+      
       <div className="w-full">
         <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
       </div>
 
-      {/* Mobile Links */}
+      
       <div className="flex flex-col space-y-1 pt-2 border-t border-neutral-800/80">
         <button
           onClick={function () {
@@ -64,7 +64,7 @@ function MobileMenu({
         </button>
       </div>
 
-      {/* Mobile Auth Section */}
+      
       <div className="pt-3 border-t border-gray-800 flex items-center justify-between">
         {isLoggedIn ? (
           <div className="flex items-center justify-between w-full">

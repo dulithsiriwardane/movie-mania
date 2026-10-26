@@ -40,7 +40,7 @@ export default function SearchBar() {
         setIsOpen(true);
 
         try {
-          const apiKey = "875a977ab94cd7108c47a3bed943830f"; // Replace with your actual TMDB API key
+          const apiKey = "875a977ab94cd7108c47a3bed943830f"; 
           const response = await fetch(
             `https://api.themoviedb.org/3/search/multi?api_key=${apiKey}&query=${encodeURIComponent(query)}`,
             {signal},

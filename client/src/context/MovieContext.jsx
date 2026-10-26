@@ -16,8 +16,8 @@ export function MovieProvider({children}) {
   useEffect(() => {
     async function fetchMovies() {
       try {
-        // const apiDataFetch = await axios.get(`${process.env.API_URL}/api/data`);
-        // const API_KEY = apiDataFetch.data.API_KEY;
+        
+        
         const API_KEY = "875a977ab94cd7108c47a3bed943830f";
         const response = await fetch(
           `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&page=1`,

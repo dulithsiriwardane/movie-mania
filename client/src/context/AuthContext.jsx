@@ -3,9 +3,9 @@ import axios from "axios";
 
 const AuthContext = createContext(null);
 
-// const API_BASE = "http://localhost:5000/api/auth";
 
-// Configure axios to send cookies with every request
+
+
 axios.defaults.withCredentials = true;
 
 export function AuthProvider({children}) {
@@ -79,7 +79,7 @@ export function AuthProvider({children}) {
     try {
       await axios.post(`${process.env.API_URL}/api/auth/signout`);
     } catch {
-      // ignore
+      
     }
     setAccessToken(null);
     setUser(null);

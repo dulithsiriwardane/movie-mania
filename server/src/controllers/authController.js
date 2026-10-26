@@ -6,15 +6,15 @@ async function signIn(req, res) {
 
     const result = await authService.signIn(email, password);
 
-    // Send refresh token as httpOnly cookie (secure, not accessible via JS)
+    
     res.cookie("refreshToken", result.refreshToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
-      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+      maxAge: 7 * 24 * 60 * 60 * 1000, 
     });
 
-    // Send access token in response body
+    
     res.json({
       accessToken: result.accessToken,
       user: result.user,
